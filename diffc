@@ -1,0 +1,68 @@
+#! /usr/bin/env node
+
+'use strict';
+
+require('colors');
+
+const argv  = require('minimist')(process.argv.slice(2));
+const exec  = require('child_process').exec;
+const files = argv._;
+
+
+// createErrorMsg :: String -> coloredString
+function createErrorMsg(msg) {
+  return msg.red;
+}
+
+// createSuccessMsg :: String -> ColoredString
+function createSuccessMsg(msg) {
+  return msg.green;
+}
+
+// printMsg :: String -> IO ()
+function printMsg(msg) {
+  console.log('diffc: '.blue + msg);
+}
+
+// exitWithSuccess :: String -> IO ()
+function exitWithSuccess(msg) {
+  if (msg) printMsg(msg);
+  process.exit(0);
+}
+
+// exitWithError :: String -> IO ()
+function exitWithError(msg) {
+  if (msg) printMsg(msg);
+  process.exit(1);
+}
+
+function diffc(filesArray) {
+  const cmd = 'diff -ru ' + filesArray.map(function(path) { return path.replace(/ /g, '\\ '); }).join(' ');
+
+  exec(cmd, function(err, stdout, stderr) {
+    if (!err) exitWithSuccess(createSuccessMsg('No files changed'));
+    // if exit code of diff is 1 or 2, then files are different so log stdout
+    // see exit codes in `info diff` in terminal
+    if (2 === err.code || 1 === err.code) {
+      const stdoutLines        = stdout.split('\n');
+      const coloredStdoutLines = stdoutLines.map(function(line) {
+        const slice3 = line.slice(0, 3);
+        const slice8 = line.slice(0, 8);
+
+        if ('Binary files'  === line.slice(0, 12)) return line.slice(0, 12).blue + line.slice(12);
+        else if ('diff -ru' === slice8) return line.bold;
+        else if ('+++'      === slice3 || '---' === slice3) return line.bold;
+        else if ('+'        === line[0]) return line.green;
+        else if ('-'        === line[0]) return line.red;
+        else if ('@@ '      === slice3) return line.cyan;
+        else if ('Only in ' === slice8) return slice8.yellow + line.slice(8);
+        return line;
+      });
+
+      console.log(coloredStdoutLines.join('\n'));
+    }
+    else exitWithError(createErrorMsg(err.code + ': ' + err.message + stderr + stdout));
+  });
+}
+
+diffc(files);

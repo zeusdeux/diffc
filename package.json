@@ -1,0 +1,24 @@
+{
+  "name": "diffc",
+  "version": "1.0.0",
+  "description": "Colored diff",
+  "main": "./diffc",
+  "bin": {
+    "diffc": "./diffc"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "minimist": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "diff",
+    "color",
+    "git-diff"
+  ],
+  "author": "Mudit Ameta",
+  "license": "MIT"
+}

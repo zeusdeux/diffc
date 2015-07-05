@@ -56,13 +56,13 @@ function diffc(filesArray) {
         const slice3 = line.slice(0, 3);
         const slice8 = line.slice(0, 8);
 
-        if ('Binary files'  === line.slice(0, 12)) return line.slice(0, 12).blue + line.slice(12);
-        else if ('diff -ru' === slice8) return line.bold;
-        else if ('+++'      === slice3 || '---' === slice3) return line.bold;
-        else if ('+'        === line[0]) return line.green;
-        else if ('-'        === line[0]) return line.red;
-        else if ('@@ '      === slice3) return line.cyan;
-        else if ('Only in ' === slice8) return slice8.yellow + line.slice(8);
+        if ('Binary files' === line.slice(0, 12)) return line.slice(0, 12).blue + line.slice(12);
+        if ('diff -ru'     === slice8) return line.bold;
+        if ('+++'          === slice3 || '---' === slice3) return line.bold;
+        if ('+'            === line[0]) return line.green;
+        if ('-'            === line[0]) return line.red;
+        if ('@@ '          === slice3) return line.cyan;
+        if ('Only in '     === slice8) return slice8.yellow + line.slice(8);
         return line;
       });
 

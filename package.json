@@ -1,6 +1,6 @@
 {
   "name": "diffc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Colored diff",
   "main": "./diffc",
   "bin": {

@@ -37,13 +37,15 @@ function exitWithError(msg) {
 }
 
 function diffc(filesArray) {
-  const cmd = 'diff -ru ' + filesArray.map(function(path) { return path.replace(/ /g, '\\ '); }).join(' ');
+  const cmd = '/usr/bin/env \\diff -ru ' + filesArray.map(function(path) { return path.replace(/ /g, '\\ '); }).join(' ');
 
   exec(cmd, function(err, stdout, stderr) {
-    if (!err) exitWithSuccess(createSuccessMsg('No files changed'));
+    if (!err) return exitWithSuccess(createSuccessMsg('No files changed'));
     // if exit code of diff is 1 or 2, then files are different so log stdout
     // see exit codes in `info diff` in terminal
-    if (2 === err.code || 1 === err.code) {
+
+    if (2 === err.code) return exitWithError(createErrorMsg(err.message));
+    if (1 === err.code) {
       const stdoutLines        = stdout.split('\n');
       const coloredStdoutLines = stdoutLines.map(function(line) {
         const slice3 = line.slice(0, 3);

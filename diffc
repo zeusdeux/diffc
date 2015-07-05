@@ -68,7 +68,7 @@ function diffc(filesArray) {
 
       return call(console.log.bind(console), coloredStdoutLines.join('\n'));
     }
-    return call(exitWithError, createErrorMsg(stderr.replace('diff: x', '') + 'Exit code: ' + err.code));
+    return call(exitWithError, createErrorMsg(stderr.replace('diff: ', '') + 'Exit code: ' + err.code));
   });
 }
 

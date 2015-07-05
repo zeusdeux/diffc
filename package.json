@@ -1,6 +1,6 @@
 {
   "name": "diffc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Colored diff",
   "main": "./diffc",
   "bin": {
@@ -20,5 +20,13 @@
     "git-diff"
   ],
   "author": "Mudit Ameta",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeusdeux/diffc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zeusdeux/diffc/issues"
+  },
+  "homepage": "https://github.com/zeusdeux/diffc#readme"
 }
